@@ -134,7 +134,7 @@ func (s *ManagedClusterScope) NetworkProject() string {
 // set to unmanaged or when the cluster will include a shared VPC, the default firewall
 // rule creation will be skipped.
 func (s *ManagedClusterScope) SkipFirewallRuleCreation() bool {
-	return (s.GCPManagedCluster.Spec.Network.Firewall.DefaultRulesManagement == infrav1.RulesManagementUnmanaged) || s.IsSharedVpc()
+	return s.IsSharedVpc()
 }
 
 // IsSharedVpc returns true If sharedVPC used else , returns false.
@@ -279,7 +279,12 @@ func (s *ManagedClusterScope) SubnetSpecs() []*compute.Subnetwork {
 
 // FirewallRulesSpec returns google compute firewall spec.
 func (s *ManagedClusterScope) FirewallRulesSpec() []*compute.Firewall {
-	return createFirewallRules(s.Name(), s.NetworkLink(), s.GCPManagedCluster.Spec.Network.Firewall.FirewallRules)
+	return createFirewallRules(
+		s.Name(),
+		s.NetworkLink(),
+		s.GCPManagedCluster.Spec.Network.Firewall.DefaultRulesManagement,
+		s.GCPManagedCluster.Spec.Network.Firewall.FirewallRules,
+	)
 }
 
 // ANCHOR_END: ClusterFirewallSpec
