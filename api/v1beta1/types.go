@@ -207,8 +207,11 @@ type FirewallRule struct {
 	// must be a lowercase letter or digit.
 	// If the firewall does not begin with the cluster name, then the cluster name
 	// will be prepended during the creation of the firewall rule.
-	// +kubebuilder:validation:Optional
-	Name string `json:"name,omitempty"`
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=63
+	// +kubebuilder:validation:Pattern=`^[a-z]([-a-z0-9]*[a-z0-9])?$`
+	Name string `json:"name"`
 	// Priority is the priority for this rule. This is an integer between `0` and
 	// `65535`, both inclusive. The default value is `1000`. Relative priorities
 	// determine which rule takes effect if multiple rules apply. Lower values

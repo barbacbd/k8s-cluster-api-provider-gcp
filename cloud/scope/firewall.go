@@ -78,12 +78,9 @@ func createFirewallRules(clusterName, networkLink string, policy infrav1.RulesMa
 		}
 
 		direction := strings.ToUpper(string(rule.Direction))
-		name := fmt.Sprintf("%s-%s", clusterName, strings.ToLower(direction))
-		if rule.Name != "" {
-			name = rule.Name
-			if !strings.HasPrefix(name, clusterName) {
-				name = fmt.Sprintf("%s-%s", clusterName, name)
-			}
+		name := rule.Name
+		if !strings.HasPrefix(name, clusterName) {
+			name = fmt.Sprintf("%s-%s", clusterName, name)
 		}
 		name = name[:min(len(name), 63)]
 		name = strings.TrimSuffix(name, "-")

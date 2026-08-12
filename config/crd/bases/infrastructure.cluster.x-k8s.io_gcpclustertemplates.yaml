@@ -362,6 +362,9 @@ spec:
                                         must be a lowercase letter or digit.
                                         If the firewall does not begin with the cluster name, then the cluster name
                                         will be prepended during the creation of the firewall rule.
+                                      maxLength: 63
+                                      minLength: 1
+                                      pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
                                       type: string
                                     priority:
                                       default: 1000
@@ -433,6 +436,8 @@ spec:
                                       maxItems: 70
                                       minItems: 0
                                       type: array
+                                  required:
+                                  - name
                                   type: object
                                   x-kubernetes-validations:
                                   - message: sourceRanges cannot be set for Egress
