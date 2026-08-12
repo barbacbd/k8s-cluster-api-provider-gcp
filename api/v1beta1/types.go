@@ -216,9 +216,9 @@ type FirewallRule struct {
 	// use a priority number less than `65535`.
 	// +kubebuilder:validation:Optional
 	// +default:value=1000
-	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Minimum=0
 	// +kubebuilder:validation:Maximum=65535
-	Priority int `json:"priority,omitempty"`
+	Priority *int32 `json:"priority,omitempty"`
 	// SourceRanges: If source ranges are specified, the firewall rule applies only
 	// to traffic that has a source IP address in these ranges. These ranges must
 	// be expressed in CIDR format. One or both of sourceRanges and sourceTags may

@@ -347,8 +347,9 @@ spec:
                                 ALLOW rules if they have equal priority. Note that VPC networks have implied
                                 rules with a priority of `65535`. To avoid conflicts with the implied rules,
                                 use a priority number less than `65535`.
+                              format: int32
                               maximum: 65535
-                              minimum: 1
+                              minimum: 0
                               type: integer
                             sourceRanges:
                               description: |-

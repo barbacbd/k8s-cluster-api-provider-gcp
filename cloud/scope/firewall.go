@@ -93,6 +93,13 @@ func createFirewallRules(clusterName, networkLink string, policy infrav1.RulesMa
 			description = "Created by Cluster API GCP Provider"
 		}
 
+		var priority int64
+		if rule.Priority != nil {
+			priority = int64(*rule.Priority)
+		} else {
+			priority = 1000
+		}
+
 		firewallRules = append(firewallRules, &compute.Firewall{
 			Name:              name,
 			Description:       description,
@@ -100,12 +107,13 @@ func createFirewallRules(clusterName, networkLink string, policy infrav1.RulesMa
 			Allowed:           allowed,
 			Denied:            denied,
 			Direction:         direction,
-			Priority:          int64(rule.Priority),
+			Priority:          priority,
 			Disabled:          false,
 			SourceRanges:      rule.SourceRanges,
 			DestinationRanges: rule.DestinationRanges,
 			TargetTags:        rule.TargetTags,
 			SourceTags:        rule.SourceTags,
+			ForceSendFields:   []string{"Priority"},
 		})
 	}
 
